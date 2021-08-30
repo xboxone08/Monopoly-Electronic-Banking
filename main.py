@@ -3,6 +3,8 @@ from profile import Profile
 import buttons
 
 root = Tk()
+root.geometry("1920x100")
+root.resizable(False, False)
 
 players = [Profile(), Profile()]
 operation = ""
