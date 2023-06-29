@@ -1,12 +1,12 @@
 from tkinter import Tk, Label
-from profile import Profile
+from profiles import Profile
 import buttons
 
 root = Tk()
 root.geometry("1920x100")
 root.resizable(False, False)
 
-players = [Profile(), Profile()]
+players: list[Profile] = [Profile(), Profile()]
 operation = ""
 current_player = 0
 player_display = Label(root, text="P" + str(current_player + 1))
@@ -20,6 +20,7 @@ def handle_buttons(dev):
     global current_player
     global operation
     global players
+    global payment
 
     if dev == buttons.ADD_PLAYER:
         players.append(Profile())
@@ -30,16 +31,20 @@ def handle_buttons(dev):
         operation = ""
         text.config(text=players[current_player].money)
     elif dev == buttons.GO:
-        players[current_player]
+        players[current_player].salary()
+    elif dev == buttons.PAY:
+        players[current_player].subtract(int(text['text']))
+        operation = '+'
+        current_player += 1
     elif dev == buttons.ADD:
         operation = '+'
     elif dev == buttons.SUBTRACT:
         operation = '-'
     elif dev == buttons.COMMIT:
         if operation == '+':
-            players[current_player].add(int(text["text"]))
+            players[current_player].add(int(text['text']))
         elif operation == '-':
-            players[current_player].subtract(int(text["text"]))
+            players[current_player].subtract(int(text['text']))
     else:
         if operation != "":  # Can only type when operating
             text.config(text=text["text"] +
